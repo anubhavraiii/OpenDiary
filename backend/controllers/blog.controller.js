@@ -3,6 +3,46 @@ import imagekit from '../lib/imageKit.js';
 import Blog from '../models/blog.model.js';
 import Comment from '../models/comment.model.js';
 import main from '../lib/gemini.js';
+import Subscriber from '../models/subscriber.model.js'; 
+import nodemailer from 'nodemailer';
+
+const sendNewBlogEmail = async (blog) => {
+    try {
+        const subscribers = await Subscriber.find({});
+        const emails = subscribers.map(subscriber => subscriber.email);
+
+        if (emails.length === 0) {
+            console.log("No subscribers to notify.");
+            return;
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_APP_PASSWORD,
+            },
+        });
+
+        const mailOptions = {
+            from: `"OpenDiary" <${process.env.GMAIL_USER}>`,
+            to: emails.join(','),
+            subject: `New Blog Post: ${blog.title}`,
+            html: `
+                <h1>${blog.title}</h1>
+                <p>${blog.subTitle}</p>
+                <img src="${blog.image}" alt="${blog.title}" style="max-width: 600px;"/>
+                <div>${blog.description.slice(0, 200)}...</div>
+                <a href="${process.env.FRONTEND_URL}/blog/${blog._id}">Read More</a>
+            `,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log("New blog notification sent to subscribers.");
+    } catch (error) {
+        console.error("Error sending new blog email:", error);
+    }
+};
 
 export const addBlog = async (req, res)=>{
     try {
@@ -35,7 +75,11 @@ export const addBlog = async (req, res)=>{
 
         const image = optimizedImageUrl;
 
-        await Blog.create({title, subTitle, description, category, image, isPublished})
+        const newBlog = await Blog.create({title, subTitle, description, category, image, isPublished})
+
+        if (isPublished) {
+            await sendNewBlogEmail(newBlog);
+        }
 
         res.json({success: true, message: "Blog added successfully"})
 
