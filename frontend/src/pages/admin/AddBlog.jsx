@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { assets, blogCategories } from '../../assets/assets'
 import Quill from 'quill';
-import { useAppContext } from '../../context/AppContext';
+import { useStore } from '../../store/store';
 import toast from 'react-hot-toast';
 import {parse} from 'marked'
 
 const AddBlog = () => {
 
-    const {axios} = useAppContext()
+    const { axios } = useStore();
     const [isAdding, setIsAdding] = useState(false)
     const [loading, setLoading] = useState(false)
 

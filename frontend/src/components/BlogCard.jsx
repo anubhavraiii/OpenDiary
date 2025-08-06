@@ -1,10 +1,10 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useStore } from '../store/store';
 
 const BlogCard = ({blog}) => {
 
     const {title, description, category, image, _id} = blog;
-    const navigate = useNavigate()
+    const { navigate } = useStore();
 
   return (
     <div onClick={()=> navigate(`/blog/${_id}`)} className='w-full rounded-lg overflow-hidden shadow hover:scale-102 hover:shadow-primary/25 duration-300 cursor-pointer'>

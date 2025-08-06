@@ -1,32 +1,27 @@
-import React, { useState } from 'react'
-import { useAppContext } from '../../context/AppContext'
+import React, { useState } from 'react';
+import { useStore } from '../../store/store'; 
 import toast from 'react-hot-toast';
-import { data } from 'react-router-dom';
 
 const Login = () => {
+  const { axios, setToken } = useStore(); 
 
-    const {axios, setToken} = useAppContext();
+  const [email, setEmail] = useState('admin@gmail.com');
+  const [password, setPassword] = useState('Admin@123');
 
-    const [email, setEmail] = useState('admin@gmail.com')
-    const [password, setPassword] = useState('Admin@123')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/admin/login', { email, password });
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault()
-        try {
-          const {data} = await axios.post('/api/admin/login', {email, password})
-
-          if(data.success){
-            setToken(data.token)
-            localStorage.setItem('token', data.token)
-            axios.defaults.headers.common['Authorization'] = data.token;
-          }
-          else{
-            toast.error(data.message)
-          }
-        } catch (error) {
-          toast.error(error.message)
-        }
+      if (data.success) {
+        setToken(data.token);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
+  };
 
   return (
     <div className='flex items-center justify-center h-screen'>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { assets } from '../../assets/assets';
-import { useAppContext } from '../../context/AppContext';
+import { useStore } from '../../store/store';
 import toast from 'react-hot-toast';
 
 const BlogTableItem = ({blog, fetchBlogs, index}) => {
@@ -8,7 +8,7 @@ const BlogTableItem = ({blog, fetchBlogs, index}) => {
     const {title, createdAt} = blog;
     const BlogDate = new Date(createdAt)
 
-    const { axios } = useAppContext();
+    const { axios } = useStore();
 
     const deleteBlog = async ()=>{
       const confirm = window.confirm('Are you sure you want to delete this blog?')

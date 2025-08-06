@@ -5,14 +5,14 @@ import Navbar from '../components/Navbar'
 import Moment from 'moment'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
-import { useAppContext } from '../context/AppContext'
+import { useStore } from '../store/store';
 import toast from 'react-hot-toast'
 
 const Blog = () => {
 
   const {id} = useParams()
 
-  const {axios} = useAppContext()
+  const { axios } = useStore();
 
   const [data, setData] = useState(null)
   const [comments, setComments] = useState([])

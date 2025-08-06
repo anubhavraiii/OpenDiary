@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useStore } from '../store/store';
 import toast from 'react-hot-toast';
 
 const Newsletter = () => {
-  const { axios } = useAppContext();
+  const { axios } = useStore();
   const [email, setEmail] = useState('');
 
   const handleSubmit = async (e) => {

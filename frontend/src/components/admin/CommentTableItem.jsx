@@ -1,6 +1,6 @@
 import React from 'react'
 import { assets } from '../../assets/assets';
-import { useAppContext } from '../../context/AppContext';
+import { useStore } from '../../store/store';
 import toast from 'react-hot-toast';
 
 const CommentTableItem = ({comment, fetchComments}) => {
@@ -8,7 +8,7 @@ const CommentTableItem = ({comment, fetchComments}) => {
     const { blog, createdAt, _id } = comment;
     const BlogDate = new Date(createdAt);
 
-    const { axios } = useAppContext()
+    const { axios } = useStore();
 
     const approveComment = async () =>{
       try {

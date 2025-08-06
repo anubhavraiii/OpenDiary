@@ -1,10 +1,10 @@
 import React, { useRef } from 'react'
 import { assets } from '../assets/assets'
-import { useAppContext } from '../context/AppContext'
+import { useStore } from '../store/store';
 
 const Header = () => {
 
-  const {setInput, input} = useAppContext()
+  const { setInput, input } = useStore();
   const inputRef = useRef()
 
   const onSubmitHandler = async (e)=>{

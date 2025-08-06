@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { assets, dashboard_data } from '../../assets/assets'
 import BlogTableItem from '../../components/admin/BlogTableItem'
-import { useAppContext } from '../../context/AppContext'
+import { useStore } from '../../store/store';
 import toast from 'react-hot-toast'
 
 const Dashboard = () => {
@@ -13,7 +13,7 @@ const Dashboard = () => {
         recentBlogs: []
     })
 
-    const { axios } = useAppContext()
+    const { axios } = useStore();
 
      const fetchDashboard = async ()=>{
        try {

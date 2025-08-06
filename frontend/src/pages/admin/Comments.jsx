@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { comments_data } from '../../assets/assets'
 import CommentTableItem from '../../components/admin/CommentTableItem'
-import { useAppContext } from '../../context/AppContext'
+import { useStore } from '../../store/store';
 import toast from 'react-hot-toast'
 
 const Comments = () => {
@@ -9,7 +9,7 @@ const Comments = () => {
     const [comments, setComments] = useState([])
     const [filter, setFilter] = useState('Not Approved')
 
-    const {axios} = useAppContext();
+    const { axios } = useStore();
 
     const fetchComments = async ()=>{
         try {
