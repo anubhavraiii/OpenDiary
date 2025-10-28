@@ -8,10 +8,15 @@ import subscriberRouter from './routes/subscriber.route.js';
 
 const app = express();
 
-await connectDB()
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200 
+};
+
+await connectDB();
 
 // Middlewares
-app.use(cors())
+app.use(cors(corsOptions));
 app.use(express.json())
 
 // Routes

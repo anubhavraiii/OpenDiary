@@ -54,7 +54,7 @@ export const addBlog = async (req, res)=>{
             return res.json({success: false, message: "Missing required fields" })
         }
 
-        const fileBuffer = fs.readFileSync(imageFile.path)
+        const fileBuffer = fs.readFileSync(imageFile.path) 
 
         // Upload Image to ImageKit
         const response = await imagekit.upload({
